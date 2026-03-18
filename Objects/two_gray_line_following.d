@@ -1,8 +1,9 @@
 .\objects\two_gray_line_following.o: Hardware\Two_Gray_Line_Following.c
-.\objects\two_gray_line_following.o: Hardware\Two_gray_sensor.h
+.\objects\two_gray_line_following.o: .\System\Delay.h
+.\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\two_gray_line_following.o: Hardware\Motor.h
 .\objects\two_gray_line_following.o: .\Start\stm32f10x.h
 .\objects\two_gray_line_following.o: .\Start\core_cm3.h
-.\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\two_gray_line_following.o: .\Start\system_stm32f10x.h
 .\objects\two_gray_line_following.o: .\User\stm32f10x_conf.h
 .\objects\two_gray_line_following.o: .\Library\stm32f10x_adc.h
@@ -29,10 +30,9 @@
 .\objects\two_gray_line_following.o: .\Library\stm32f10x_usart.h
 .\objects\two_gray_line_following.o: .\Library\stm32f10x_wwdg.h
 .\objects\two_gray_line_following.o: .\Library\misc.h
-.\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\two_gray_line_following.o: Hardware\Motor.h
-.\objects\two_gray_line_following.o: .\System\Delay.h
 .\objects\two_gray_line_following.o: Hardware\Serial.h
 .\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\two_gray_line_following.o: .\System\Timer.h
+.\objects\two_gray_line_following.o: Hardware\Two_gray_sensor.h
+.\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\two_gray_line_following.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

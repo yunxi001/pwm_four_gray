@@ -1,7 +1,10 @@
 .\objects\main.o: User\main.c
+.\objects\main.o: .\System\Delay.h
+.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: .\Hardware\Encoder.h
+.\objects\main.o: .\Hardware\Motor.h
 .\objects\main.o: .\Start\stm32f10x.h
 .\objects\main.o: .\Start\core_cm3.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: .\Start\system_stm32f10x.h
 .\objects\main.o: .\User\stm32f10x_conf.h
 .\objects\main.o: .\Library\stm32f10x_adc.h
@@ -28,12 +31,9 @@
 .\objects\main.o: .\Library\stm32f10x_usart.h
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: .\System\Delay.h
 .\objects\main.o: .\Hardware\Serial.h
-.\objects\main.o: .\Hardware\Motor.h
-.\objects\main.o: .\Hardware\Encoder.h
+.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\System\Timer.h
+.\objects\main.o: .\Hardware\Two_Gray_Line_Following.h
 .\objects\main.o: .\Hardware\Two_gray_sensor.h
 .\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\main.o: .\Hardware\Two_Gray_Line_Following.h
-.\objects\main.o: .\System\Timer.h

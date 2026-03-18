@@ -11,7 +11,7 @@
 #define Analog_6_PIN						GPIO_Pin_6
 
 // 声明外部变量
-extern uint16_t Analog_data[2];
+extern volatile uint16_t Analog_data[2];
 
 void Two_gray_sensor_Init(void);
 void Two_gray_sensor_Test(void);

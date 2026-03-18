@@ -30,5 +30,5 @@
 .\objects\two_gray_sensor.o: .\Library\stm32f10x_wwdg.h
 .\objects\two_gray_sensor.o: .\Library\misc.h
 .\objects\two_gray_sensor.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\two_gray_sensor.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\two_gray_sensor.o: .\System\delay.h
+.\objects\two_gray_sensor.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
