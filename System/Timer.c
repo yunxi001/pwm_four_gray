@@ -59,6 +59,7 @@ void TIM2_IRQHandler(void)
     {
         // 在中断中进行快速转弯检测
         extern uint16_t Analog_data[2];
+        extern uint8_t  g_turning_in_progress;
 
         // 如果正在转弯，跳过检测
         if (!g_turning_in_progress)

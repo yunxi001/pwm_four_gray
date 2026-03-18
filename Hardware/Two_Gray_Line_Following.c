@@ -188,13 +188,13 @@ void Execute_Right_Turn(uint16_t speed)
 {
     printf("执行右转\r\n");
 
-    uint16_t right_threshold  = (3815 + 841) / 2;    // ≈ 2328
-    uint16_t left_threshold = (3884 + 1254) / 2;   // ≈ 2569
+    uint16_t left_threshold  = (3815 + 841) / 2;    // ≈ 2328
+    uint16_t right_threshold = (3884 + 1254) / 2;   // ≈ 2569
 
     // 原地右转：左轮正转，右轮反转，速度更快
-    // 第一阶段：快速转到左传感器离开黑线
+    // 第一阶段：快速转到右传感器离开黑线
     uint8_t turn_timeout = 0;
-    while (Analog_data[0] < right_threshold || turn_timeout < 100)
+    while (Analog_data[1] < right_threshold || turn_timeout < 100)
     {
         Motor_SetSpeed(MOTOR1, 600);    // 左后轮正转
         Motor_SetSpeed(MOTOR2, 600);    // 右后轮反转
@@ -204,8 +204,8 @@ void Execute_Right_Turn(uint16_t speed)
         turn_timeout++;
     }
 
-    // 第二阶段：继续转到右传感器找到新的黑线
-    while (Analog_data[1] >= left_threshold)
+    // 第二阶段：继续转到左传感器找到新的黑线
+    while (Analog_data[0] >= left_threshold)
     {
         Motor_SetSpeed(MOTOR1, 600);    // 左后轮正转，保持高速
         Motor_SetSpeed(MOTOR2, 600);    // 右后轮反转
@@ -261,12 +261,12 @@ void Line_Following_With_Turns(uint16_t speed, float kp, float kd)
             Motor_SetSpeed(MOTOR3, 500);
             Motor_SetSpeed(MOTOR4, -500);
             Delay_ms(200);
-//            // 右转一点距离
-//            Motor_SetSpeed(MOTOR1, 600);    // 左后轮正转
-//            Motor_SetSpeed(MOTOR2, 600);    // 右后轮反转
-//            Motor_SetSpeed(MOTOR3, -600);   // 左前轮正转
-//            Motor_SetSpeed(MOTOR4, -600);   // 右前轮反转
-//            Delay_ms(300);
+            // 右转一点距离
+            //  Motor_SetSpeed(MOTOR1, 600);    // 左后轮正转
+            //  Motor_SetSpeed(MOTOR2, 600);    // 右后轮反转
+            //  Motor_SetSpeed(MOTOR3, -600);   // 左前轮正转
+            //  Motor_SetSpeed(MOTOR4, -600);   // 右前轮反转
+            //  Delay_ms(300);
             printf("检测到十字路口，执行右转\r\n");
             Execute_Right_Turn(speed);
             break;
