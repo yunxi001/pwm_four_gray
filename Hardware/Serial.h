@@ -3,6 +3,16 @@
 
 #include <stdio.h>
 
+#define S485_IO_CLK_ENABLE()		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE)
+#define	S485_IO_PORT						GPIOA
+#define	S485_TX_PIN							GPIO_Pin_2
+#define S485_RX_PIN							GPIO_Pin_3	
+#define S485_DIR_CLK_ENABLE()		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE)
+#define S485_DIR_PORT						GPIOC
+#define S485_DIR_PIN						GPIO_Pin_4 
+void S485_Init(uint32_t bauds);
+void S485_Dir_Control(uint8_t state);
+
 extern char Serial_RxPacket[];
 extern uint8_t Serial_RxFlag;
 

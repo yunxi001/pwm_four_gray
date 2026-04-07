@@ -8,27 +8,28 @@
 volatile int encoder[4] = {0};
 
 void SystemClock_Config(void) {
-    RCC_DeInit();
-    
-    RCC_HSEConfig(RCC_HSE_ON);
-    while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET);
-    
-    RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
-    RCC_PLLCmd(ENABLE);
-    while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
-    
-    RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
-    while(RCC_GetSYSCLKSource() != 0x08);
-    
-    RCC_HCLKConfig(RCC_SYSCLK_Div1);
-    RCC_PCLK1Config(RCC_HCLK_Div2);
-    RCC_PCLK2Config(RCC_HCLK_Div1);
-    
-    // ???????????
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | 
-                          RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD |
-                          RCC_APB2Periph_AFIO | RCC_APB2Periph_USART1 |
-                          RCC_APB2Periph_TIM1 | RCC_APB2Periph_TIM8, ENABLE);
+	RCC_DeInit();
+	
+	RCC_HSEConfig(RCC_HSE_ON);
+	while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET);
+	
+	RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
+	RCC_PLLCmd(ENABLE);
+	while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
+	
+	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+	while(RCC_GetSYSCLKSource() != 0x08);
+	
+	RCC_HCLKConfig(RCC_SYSCLK_Div1);
+	RCC_PCLK1Config(RCC_HCLK_Div2);
+	RCC_PCLK2Config(RCC_HCLK_Div1);
+	
+	// ???????????
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | 
+						  RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD |
+						  RCC_APB2Periph_AFIO | RCC_APB2Periph_USART1 |
+						  RCC_APB2Periph_TIM1 | RCC_APB2Periph_TIM8, ENABLE);
+	SystemCoreClock = 72000000;
 }
 
 // ???????????? - ??????
@@ -132,7 +133,7 @@ void EXTI1_IRQHandler(void) {
 			  int a = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
 			  int b = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1);
 				if(a==1)
-        {
+				{
 					if(b==1)
 					{
 						encoder[1]++; 

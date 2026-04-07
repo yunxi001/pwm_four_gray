@@ -31,3 +31,7 @@
 .\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\serial.o: Hardware\Serial.h
+.\objects\serial.o: Hardware\camera_protocol.h
+.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\serial.o: Hardware\GServo.h
+.\objects\serial.o: .\System\Delay.h

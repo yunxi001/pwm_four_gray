@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "Delay.h"
 #include "Serial.h"
-#include "Encoder.h"
 
 // 电机引脚定义
 // 电机1: PC8(M+), PC7(M-)
@@ -111,21 +110,10 @@ void Motor4_Control(uint8_t direction) {
         GPIO_ResetBits(GPIOB, GPIO_Pin_15);
     }
 }
-// 单个电机最大转速测试
-void Test_Single_Motor_Max_Speed(uint8_t motor_id) {
-    int encoder_buf[4];
-    int32_t encoder_count_start, encoder_count_end;
-    float rpm;
-    
-    printf("\r\n=== 电机%d 最大转速测试 ===\r\n", motor_id);
-    
-    // 清零编码器
-    RESET_Encoder();
-    Delay_ms(100);
-    
-    // 获取初始编码器值
-    GET_Encoder(encoder_buf);
-    encoder_count_start = encoder_buf[motor_id - 1];  // 数组索引从0开始
+
+// 单个电机全速运行测试
+void Run_Single_Motor_Max_Speed(uint8_t motor_id, uint16_t duration_ms) {
+    printf("\r\n=== 电机%d 全速运行测试 ===\r\n", motor_id);
     
     // 启动电机全速正转
     switch(motor_id) {
@@ -135,14 +123,10 @@ void Test_Single_Motor_Max_Speed(uint8_t motor_id) {
         case 4: Motor4_Control(1); break;
     }
     
-    printf("电机%d 全速正转中...\r\n", motor_id);
+    printf("电机%d 全速正转中... (%d ms)\r\n", motor_id, duration_ms);
     
-    // 运行5秒测量转速
-    Delay_ms(5000);
-    
-    // 获取结束编码器值
-    GET_Encoder(encoder_buf);
-    encoder_count_end = encoder_buf[motor_id - 1];
+    // 运行指定时间
+    Delay_ms(duration_ms);
     
     // 停止电机
     switch(motor_id) {
@@ -152,37 +136,12 @@ void Test_Single_Motor_Max_Speed(uint8_t motor_id) {
         case 4: Motor4_Control(0); break;
     }
     
-    // 计算转速 (根据编码器代码，每转约26*90=2340个脉冲)
-    int32_t pulse_count = encoder_count_end - encoder_count_start;
-    float revolutions = (float)pulse_count / 2340.0f;  // 转数
-    rpm = (revolutions / 5.0f) * 60.0f;  // RPM = (转数/时间秒) * 60
-    
-    printf("电机%d 测试结果:\r\n", motor_id);
-    printf("  编码器脉冲: %ld -> %ld (差值: %ld)\r\n", 
-           encoder_count_start, encoder_count_end, pulse_count);
-    printf("  转数: %.2f 转\r\n", revolutions);
-    printf("  转速: %.2f RPM\r\n", rpm);
-    
-    Delay_ms(2000);
+    printf("电机%d 已停止\r\n", motor_id);
 }
 
-// 所有电机同时运行最大转速测试
-void Test_All_Motors_Max_Speed(void) {
-    int encoder_buf[4];
-    int32_t encoder_start[4], encoder_end[4];  // 数组索引0-3对应电机1-4
-    float rpm[4];
-    
-    printf("\r\n=== 所有电机同时最大转速测试 ===\r\n");
-    
-    // 清零编码器
-    RESET_Encoder();
-    Delay_ms(100);
-    
-    // 获取初始编码器值
-    GET_Encoder(encoder_buf);
-    for(int i = 0; i < 4; i++) {
-        encoder_start[i] = encoder_buf[i];
-    }
+// 所有电机同时全速运行测试
+void Run_All_Motors_Max_Speed(uint16_t duration_ms) {
+    printf("\r\n=== 所有电机同时全速运行测试 ===\r\n");
     
     // 启动所有电机全速正转
     Motor1_Control(1);
@@ -190,59 +149,15 @@ void Test_All_Motors_Max_Speed(void) {
     Motor3_Control(1);
     Motor4_Control(1);
     
-    printf("所有电机全速正转中...\r\n");
+    printf("所有电机全速正转中... (%d ms)\r\n", duration_ms);
     
-    // 运行5秒测量转速
-    Delay_ms(5000);
-    
-    // 获取结束编码器值
-    GET_Encoder(encoder_buf);
-    for(int i = 0; i < 4; i++) {
-        encoder_end[i] = encoder_buf[i];
-    }
+    // 运行指定时间
+    Delay_ms(duration_ms);
     
     // 停止所有电机
     Stop_All_Motors();
     
-    // 计算并显示结果
-    printf("\r\n=== 所有电机测试结果 ===\r\n");
-    for(int i = 0; i < 4; i++) {
-        int32_t pulse_count = encoder_end[i] - encoder_start[i];
-        float revolutions = (float)pulse_count / 2340.0f;  // 每转2340个脉冲
-        rpm[i] = (revolutions / 5.0f) * 60.0f;
-        
-        printf("电机%d: 脉冲=%ld, 转数=%.2f, 转速=%.2f RPM\r\n", 
-               i+1, pulse_count, revolutions, rpm[i]);
-    }
-    
-    // 找出最快和最慢的电机
-    float max_rpm = rpm[0], min_rpm = rpm[0];
-    int max_motor = 1, min_motor = 1;
-    
-    for(int i = 1; i < 4; i++) {
-        if(rpm[i] > max_rpm) {
-            max_rpm = rpm[i];
-            max_motor = i + 1;
-        }
-        if(rpm[i] < min_rpm) {
-            min_rpm = rpm[i];
-            min_motor = i + 1;
-        }
-    }
-    
-    printf("\r\n最快电机: 电机%d (%.2f RPM)\r\n", max_motor, max_rpm);
-    printf("最慢电机: 电机%d (%.2f RPM)\r\n", min_motor, min_rpm);
-    printf("转速差异: %.2f RPM\r\n", max_rpm - min_rpm);
-}
-
-// 电压对转速影响测试（通过PWM模拟不同电压）
-void Test_Voltage_Speed_Relationship(uint8_t motor_id) {
-    printf("\r\n=== 电机%d 电压-转速关系测试 ===\r\n", motor_id);
-    printf("注意：此测试使用数字1/0控制，无法模拟不同电压\r\n");
-    printf("如需测试不同电压下的转速，需要使用PWM控制或外部调压\r\n");
-    
-    // 这里只能测试满电压下的转速
-    Test_Single_Motor_Max_Speed(motor_id);
+    printf("所有电机已停止\r\n");
 }
 
 int main(void) {
@@ -254,50 +169,29 @@ int main(void) {
     // 初始化外设
     Serial_Init();
     Motor_GPIO_Init();  // 使用推挽输出模式
-    Encoder_EXTI_Init();     // 初始化编码器
-    
+
     printf("\r\n========================================\r\n");
-    printf("     STM32 电机最大转速测试程序\r\n");
+    printf("     STM32 电机全速运行测试程序\r\n");
     printf("     使用推挽输出 1/0 控制模式\r\n");
     printf("========================================\r\n");
     
-    Delay_ms(3000);  // 等待3秒准备
+    Delay_ms(1000);  // 等待1秒准备
     
-    // 测试菜单
-    printf("\r\n请选择测试模式:\r\n");
-    printf("1. 单个电机测试 (逐个测试每个电机)\r\n");
-    printf("2. 所有电机同时测试\r\n");
-    printf("3. 连续循环测试\r\n");
-    
-    // 自动执行所有测试
-    printf("\r\n开始自动测试...\r\n");
-    
-    // 1. 逐个测试每个电机
+    // 逐个测试每个电机
     for(int i = 1; i <= 4; i++) {
-        Test_Single_Motor_Max_Speed(i);
+        Run_Single_Motor_Max_Speed(i, 3000);  // 每个电机运行3秒
+        Delay_ms(1000);  // 间隔1秒
     }
     
-    // 2. 所有电机同时测试
-    Test_All_Motors_Max_Speed();
+    printf("\r\n=== 开始所有电机同时运行测试 ===\r\n");
+    Run_All_Motors_Max_Speed(5000);  // 所有电机一起运行5秒
     
-    // 3. 连续循环测试（观察稳定性）
-    printf("\r\n=== 连续循环测试 (5次) ===\r\n");
-    for(int loop = 1; loop <= 5; loop++) {
-        printf("\r\n--- 第%d次循环测试 ---\r\n", loop);
-        Test_All_Motors_Max_Speed();
-        Delay_ms(2000);
-    }
-    
-    printf("\r\n=== 所有测试完成 ===\r\n");
-    printf("测试结论:\r\n");
-    printf("1. 推挽输出1/0控制下的最大转速已测量\r\n");
-    printf("2. 各电机转速差异已记录\r\n");
-    printf("3. 系统稳定性已验证\r\n");
+    printf("\r\n=== 电机测试完成 ===\r\n");
     
     // 主循环 - 保持电机停止状态
     while(1) {
         Stop_All_Motors();
-        Delay_ms(1000);
-        printf("所有电机已停止\r\n");
+        Delay_ms(2000);
+        printf("系统空闲中...\r\n");
     }
 }

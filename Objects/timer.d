@@ -1,4 +1,5 @@
 .\objects\timer.o: System\Timer.c
+.\objects\timer.o: System\Delay.h
 .\objects\timer.o: .\Start\stm32f10x.h
 .\objects\timer.o: .\Start\core_cm3.h
 .\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

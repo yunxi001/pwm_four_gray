@@ -17,34 +17,26 @@ Library Manager: ArmAr.exe V5.05 update 2 (build 169)
 Hex Converter:   FromElf.exe V5.05 update 2 (build 169)
 CPU DLL:         SARMCM3.DLL V5.43.0.0
 Dialog DLL:      DCM.DLL V1.17.5.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.3.1.0
+Target DLL:      UL2CM3.DLL V1.164.16.0
 Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
-C:\Users\Administrator\Desktop\zd\V1.0版本多合一32小车底盘(杨桂钦+新增：PWM控制电机，读取电机编码值，未增加：麦轮控制和速度闭环)\Project.uvprojx
-Project File Date:  03/17/2026
+D:\zd\V1.0版本多合一32小车底盘(杨桂钦+新增：PWM控制电机，读取电机编码值，未增加：麦轮控制和速度闭环)\Project.uvprojx
+Project File Date:  04/04/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling main.c...
-User\main.c(63): warning:  #870-D: invalid multibyte character sequence
-      printf("鐢?鏈?GPIO鍒?濮?鍖?瀹?鎴? - 鎺?鎸?杈?鍑?妯?寮?\r\n");
-User\main.c(169): warning:  #870-D: invalid multibyte character sequence
-      printf("=== 鐢?鏈?浣?缃?鍜?鏂?鍚?娴?璇? ===\r\n");
-User\main.c(176): warning:  #870-D: invalid multibyte character sequence
-      printf("MOTOR1 閫?搴? +500 (濡?鏋?姝?纭?搴?璇?鏄?鍓?杩?)\r\n");
-User\main.c(190): warning:  #870-D: invalid multibyte character sequence
-      printf("MOTOR2 閫?搴? +500 (濡?鏋?姝?纭?搴?璇?鏄?鍓?杩?)\r\n");
-User\main.c(204): warning:  #870-D: invalid multibyte character sequence
-      printf("MOTOR3 閫?搴? +500 (濡?鏋?姝?纭?搴?璇?鏄?鍓?杩?)\r\n");
-User\main.c(218): warning:  #870-D: invalid multibyte character sequence
-      printf("MOTOR4 閫?搴? +500 (濡?鏋?姝?纭?搴?璇?鏄?鍓?杩?)\r\n");
-User\main.c: 6 warnings, 0 errors
+.\Hardware\brightness_sensor.h(9): warning:  #47-D: incompatible redefinition of macro "Analog_CLK_ENABLE" (declared at line 9 of ".\Hardware\Two_gray_sensor.h")
+  #define Analog_CLK_ENABLE()			RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE)
+User\main.c(73): warning:  #188-D: enumerated type mixed with another type
+      Gir_setMode(0);             // 璁?缃?绾?澶?娴?璺?浼?鎰?鍣?妯?寮?:0-楂?绮?搴?妯?寮?,1-浣?绮?搴?妯?寮?
+User\main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=12456 RO-data=268 RW-data=56 ZI-data=1240  
+Program Size: Code=15544 RO-data=288 RW-data=168 ZI-data=1624  
 FromELF: creating hex file...
-".\Objects\Project.axf" - 0 Error(s), 6 Warning(s).
+".\Objects\Project.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 

@@ -1,5 +1,28 @@
 #include "stm32f10x.h"
 
+volatile uint64_t sys_tick_counter = 0;
+
+void SysTick_Handler(void)
+{
+	sys_tick_counter++;
+}
+
+void Systick_Init(void)
+{
+	const uint32_t sys_load = SystemCoreClock / 1000 - 1;
+	SysTick->LOAD = sys_load;
+	SysTick->VAL  = 0;
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk|
+									SysTick_CTRL_TICKINT_Msk |
+									SysTick_CTRL_ENABLE_Msk;	
+}
+
+void delay_ms_AAA(uint32_t ms)
+{
+	uint32_t start = sys_tick_counter;
+	while((sys_tick_counter - start) < ms);
+}
+
 /**
   * @brief  微秒级延时
   * @param  xus 延时时长，范围：0~233015
